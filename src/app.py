@@ -4,7 +4,7 @@ import os
 from flask import Flask, Response
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
-from Model import db
+#from Model import db
 
 app = Flask(__name__)  # create a Flask app
 db_engine = create_engine("sqlite:///data/musical_instrument_reviews.sqlite")
