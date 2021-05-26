@@ -1,0 +1,5 @@
+# dependencies
+Flask
+sqlalchemy
+pytest
+flask_sqlalchemy
