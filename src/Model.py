@@ -1,7 +1,26 @@
-# app/models.py
+# src/models.py
+import os
+from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+def setup_postgres_db(app):
+    """
+    setup POSTGRES db
+    """
+    POSTGRES = {
+    'user': 'postgres',
+    'pw': 'password',
+    'db': 'my_database',
+    'host': 'localhost',
+    'port': '5432'}
+
+    app.config['DEBUG'] = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
+    %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+    db.app = app
+    db.init_app(app)
 
 class User(db.Model):
     __tablename__ = 'reviews'
@@ -19,10 +38,19 @@ class User(db.Model):
     vote = db.Column(db.String(120), index=True, unique=True)
 
     def __init__(self, level_0, index, overall, verified, reviewTime, reviewerID,productID, reviewerName,reviewText, summary,unixReviewText, vote):
-        self.title = title
-        self.release_date = release_date
+        self.level_0 = level_0
+        self.index = index
+        self.overall= overall
+        self.verified= verified
+        self.reviewTime= reviewTime
+        self.reviewerID= reviewerID
+        self.productID= productID
+        self.reviewerName= reviewerName
+        self.reviewText=reviewText
+        self.summary=summary
+        self.unixReviewText= unixReviewText
+        self.vote=vote
         
 
-
     def __repr__(self):
-        return '<User {}>'.format(self.id)
+        return '<User {}>'.format(self.level_0)

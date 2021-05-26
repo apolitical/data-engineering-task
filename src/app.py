@@ -4,28 +4,17 @@ import os
 from flask import Flask, Response
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
-#from Model import db
+from flask_sqlalchemy import SQLAlchemy
+#from model import setup_postgres_db
 
-app = Flask(__name__)  # create a Flask app
+# create a Flask app
+app = Flask(__name__) 
+
+#setting up postgres
+#setup_postgres_db(app)
+
+# for queries
 db_engine = create_engine("sqlite:///data/musical_instrument_reviews.sqlite")
-
-
-def setup_postgres_db(app):
-    """
-    setup POSTGRES db
-        
-    """
-    POSTGRES = {
-    'user': 'postgres',
-    'pw': 'password',
-    'db': 'my_database',
-    'host': 'localhost',
-    'port': '5432'}
-
-    app.config['DEBUG'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
-    %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-    db.init_app(app)
 
 
 @app.route("/", methods=["GET"])
@@ -64,7 +53,7 @@ def user_review(user_id: str) -> Response:
     """
     user review - return retrieve aggregated information for a User
     with a particular ID.
-    SAMPLE userID=ABLTNLVKCVQMK
+    SAMPLE userID=ABLTNLVKCVQMK, -> THIS userIdD belong to 'Mark'
 
     """
     query= 'SELECT * FROM reviews where reviewerID=:user_id;'
