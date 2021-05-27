@@ -112,3 +112,11 @@ Submitting a solution
 After completing the task, please ensure your solution is pushed to GitHub and that all changes are merged into the main branch.
 
 You should then contact the task assessor with a link to your solution and handover notes (see above for guidance).
+
+# How to run the db!
+---------------------
+$ export FLASK_APP=src/app.py
+# Intitalize the table in our database
+$ flask db init
+$ flask db migate
+$ flask db upgrade

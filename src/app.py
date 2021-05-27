@@ -5,16 +5,50 @@ from flask import Flask, Response
 from sqlalchemy import create_engine
 from sqlalchemy import inspect
 from flask_sqlalchemy import SQLAlchemy
-#from model import setup_postgres_db
-
-# create a Flask app
-app = Flask(__name__) 
-
-#setting up postgres
-#setup_postgres_db(app)
+from flask_migrate import Migrate
 
 # for queries
 db_engine = create_engine("sqlite:///data/musical_instrument_reviews.sqlite")
+
+# Flask app
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/reviews'
+db= SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+
+class User(db.Model):
+    __tablename__ = 'reviews'
+    level_0 = db.Column(db.Integer, primary_key=True)
+    index = db.Column(db.Integer, index=True, unique=True)
+    overall = db.Column(db.Float, index=True, unique=True)
+    verified = db.Column(db.Integer, primary_key=True)
+    reviewTime = db.Column(db.String(120), index=True, unique=True)
+    reviewerID = db.Column(db.String(120), index=True, unique=True)
+    productID = db.Column(db.String(120), primary_key=True)
+    reviewerName = db.Column(db.String(120), index=True, unique=True)
+    reviewText = db.Column(db.String(120), index=True, unique=True)
+    summary = db.Column(db.String(120), primary_key=True)
+    unixReviewText = db.Column(db.Integer, index=True, unique=True)
+    vote = db.Column(db.String(120), index=True, unique=True)
+
+    def __init__(self, level_0, index, overall, verified, reviewTime, reviewerID,productID, reviewerName,reviewText, summary,unixReviewText, vote):
+        self.level_0 = level_0
+        self.index = index
+        self.overall= overall
+        self.verified= verified
+        self.reviewTime= reviewTime
+        self.reviewerID= reviewerID
+        self.productID= productID
+        self.reviewerName= reviewerName
+        self.reviewText=reviewText
+        self.summary=summary
+        self.unixReviewText= unixReviewText
+        self.vote=vote
+        
+
+    def __repr__(self):
+        return '<User {}>'.format(self.level_0)
 
 
 @app.route("/", methods=["GET"])

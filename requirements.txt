@@ -3,3 +3,5 @@ Flask
 sqlalchemy
 pytest
 flask_sqlalchemy
+psycopg2
+flask_migrate - 
